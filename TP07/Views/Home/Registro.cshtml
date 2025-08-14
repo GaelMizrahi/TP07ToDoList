@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Registrarse";
+}
+<section class="Registro"> 
+
+<form action='@Url.Action("Registro", "Account")' method="post">
+  UserName <input type="text" name="username" required>
+  Password <input type="password" name="password" required>
+  Nombre <input type="text" name="nombre" required>
+  Apellido <input type="text" name="apellido" required>
+  Foto <input type="file" name="apellido" required>
+  <input type="submit" value="Entrar" autoComplete = "off">
+</form>
+
+</section>
