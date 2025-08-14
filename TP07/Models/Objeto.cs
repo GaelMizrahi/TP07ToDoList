@@ -1,4 +1,6 @@
+namespace TP07.Models;
 using Newtonsoft.Json;
+using Microsoft.Data.SqlClient;
 
 
 public static class Objeto
