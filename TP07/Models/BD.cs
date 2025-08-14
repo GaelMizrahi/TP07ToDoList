@@ -26,10 +26,9 @@ public static class BD
           usuario = connection.QueryFirstOrDefault<Usuario>(query, new {username = usuario.username});
           if(usuario == null)
           {
-            sepudo = true;
-            
+            sepudo = true;            
           }
-        return sepudo;
+          return sepudo;
     }
 }
     public static bool registrar ( Usuario usuario)
