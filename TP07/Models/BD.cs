@@ -49,11 +49,12 @@ public static class BD
 
     public static List<Tarea> TraerTareas(int idUsuario)
     {
+        bool sePudo = false;
         List <Tarea> tareas = new List<Tarea>();
         using(SqlConnection connection = new SqlConnection(_connectionString))
     {
         string query = "SELECT * FROM Tareas WHERE idUsuario = @idUsuario";
-        tareas = connection.Query<Tarea>(query).ToList();
+        tareas = connection.Query<Tarea>(query, new { idUsuario }).ToList();
     }
         return tareas;
     }
@@ -82,7 +83,7 @@ public static class BD
         using(SqlConnection connection = new SqlConnection(_connectionString))
     {
         string query = "SELECT * FROM Tareas WHERE ID = @ID";
-        tareaAEditar = connection.QueryFirstOrDefault<Tarea> (query, new { ID = @ID });        
+        tareaAEditar = connection.QueryFirstOrDefault<Tarea> (query, new { ID });        
 
     }
     return tareaAEditar;
@@ -93,12 +94,13 @@ public static class BD
         Tarea Tact = new Tarea();
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-           string query = "UPDATE Tareas SET titulo = @titulo, descripcion = @descripcion, fecha = @fecha, finalizada = @finalizada WHERE id = @id";
+           string query = "UPDATE Tareas SET titulo = @titulo, descripcion = @descripcion, fecha = @fecha, finalizada = @finalizada WHERE id = @id   WHERE ID = @ID AND idUsuario = @idUsuario;";
              connection.Execute(query, new {
              titulo = tarea.titulo,
             descripcion = tarea.descripcion,
             fecha = tarea.fecha,
-            finalizada = tarea.finalizada});
+            finalizada = tarea.finalizada,
+            idUsuario = tarea.idUsuario});
         }
     }
         

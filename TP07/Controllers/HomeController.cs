@@ -17,20 +17,33 @@ public class HomeController : Controller
     {
          return RedirectToAction("Login,AccountController");
     }
-    public IActionResult cargarTareas(int idUsuario)
+    public IActionResult cargarTareas()
     {
-        
-        List<Tarea> listaTareas = BD.TraerTareas(idUsuario);
+        int id= int.Parse(HttpContext.Session.GetString("id"));
+        List<Tarea> listaTareas;
+        ViewBag.listaTareas = BD.TraerTareas(id);
         return View("ListaTareas");
     }
 
 
-   public IActionResult CrearTareas(int id, string titulo, string descripcion, DateTime fecha, bool finalizada)
+   public IActionResult CrearTarea( string titulo, string descripcion, DateTime fecha, bool finalizada)
     {
-      Tarea tarea = new tarea(id, titulo, descripcion, fecha, finalizada);  
+     int id= int.Parse(HttpContext.Session.GetString("id"));
+     Tarea tarea = new tarea(titulo, descripcion, fecha, finalizada, id);  
       BD.CrearTarea(tarea); 
-      return View("CrearTareas");
+      return View("ListaTareas");
     }
+    public IActionResult modificarTarea( string titulo, string descripcion, DateTime fecha, bool finalizada)
+    {
+    Tarea tarea = new tarea(id, titulo, descripcion, fecha, finalizada);  
+      BD.ActualizarTarea(tarea);
+      return View ("ListaTareas");
+    }
+    public IActionResult finalizarTarea(int id)
+    {
+        BD.FinalizarTarea(id);
+    }
+
         
         public IActionResult Privacy()
     {
