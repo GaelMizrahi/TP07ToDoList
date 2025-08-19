@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Registro";
+}
+
+<h2>Registro</h2>
+
+@if(ViewBag.Error != null){
+    <p style="color:red">@ViewBag.Error</p>
+}
+
+<form action="@Url.Action("Registro","Account")" method="post">
+    Usuario: <input type="text" name="username" />
+    
+    Contraseña: <input type="password" name="password" />
+   
+    Nombre: <input type="text" name="nombre" />
+   
+    Apellido: <input type="text" name="apellido" />
+    
+    Foto (URL): <input type="text" name="foto" />
+    
+    <input type="submit" value="Registrarse" />
+</form>

@@ -19,30 +19,100 @@ public class HomeController : Controller
     }
     public IActionResult cargarTareas()
     {
-        int id= int.Parse(HttpContext.Session.GetString("id"));
-        List<Tarea> listaTareas;
-        ViewBag.listaTareas = BD.TraerTareas(id);
-        return View("ListaTareas");
+       string idStr = HttpContext.Session.GetString("id");
+          
+
+            int id = int.Parse(idStr);
+            List<Tarea> lista = BD.TraerTareas(idUsuario);
+
+            ViewBag.ListaTareas = lista;
+            return View("ListaTareas");
     }
 
 
    public IActionResult CrearTarea( string titulo, string descripcion, DateTime fecha, bool finalizada)
     {
-     int id= int.Parse(HttpContext.Session.GetString("id"));
-     Tarea tarea = new tarea(titulo, descripcion, fecha, finalizada, id);  
-      BD.CrearTarea(tarea); 
-      return View("ListaTareas");
+      string idStr = HttpContext.Session.GetString("id");
+           
+            return View();
     }
+          public IActionResult CrearTareaGuardar(string titulo, string descripcion, DateTime fecha)
+        {
+            string idStr = HttpContext.Session.GetString("id");
+            
+
+            int idUsuario = int.Parse(idStr);
+
+            Tarea tarea = new Tarea
+            {
+                Titulo = titulo,
+                Descripcion = descripcion,
+                Fecha = fecha == default ? DateTime.Now : fecha,
+                Finalizada = false,
+                IdUsuario = idUsuario
+            };
+
+            BD.CrearTarea(tarea);
+              ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+            return View("ListaTareas");
+        }
+
     public IActionResult modificarTarea( string titulo, string descripcion, DateTime fecha, bool finalizada)
     {
-    Tarea tarea = new tarea(id, titulo, descripcion, fecha, finalizada);  
-      BD.ActualizarTarea(tarea);
-      return View ("ListaTareas");
+          
+        
+            string idStr = HttpContext.Session.GetString("id");
+            
+
+            Tarea tarea = BD.TraerTareaAEditar(idStr);
+            
+
+            return View(tarea);
+        
     }
-    public IActionResult finalizarTarea(int id)
+          public IActionResult EditarTareaGuardar(int id, string titulo, string descripcion, DateTime fecha, bool finalizada)
+        {
+            string idStr = HttpContext.Session.GetString("id");
+            
+
+            int idUsuario = int.Parse(idStr);
+
+            Tarea tarea = new Tarea
+            {
+                Id = id,
+                Titulo = titulo,
+                Descripcion = descripcion,
+                Fecha = fecha == default ? DateTime.Now : fecha,
+                Finalizada = finalizada,
+                IdUsuario = idUsuario
+            };
+
+            BD.ActualizarTarea(tarea);
+             ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+            return View("ListaTareas");
+        }
+    public IActionResult finalizarTarea( )
     {
-        BD.FinalizarTarea(id);
+         string idStr = HttpContext.Session.GetString("id");
+           int idUsuario = int.Parse(idStr);
+            BD.FinalizarTarea(id);
+            
+            ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+            return View("ListaTareas");
+
+      
     }
+         public IActionResult EliminarTarea(int id)
+        {
+            string idStr = HttpContext.Session.GetString("id");
+        
+
+            int idUsuario = int.Parse(idStr);
+            BD.EliminarTarea(id);
+            
+            ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+            return View("ListaTareas");
+        }
 
         
         public IActionResult Privacy()

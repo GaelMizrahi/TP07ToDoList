@@ -6,22 +6,22 @@ using Microsoft.Data.SqlClient;
 public class Tarea
 {
   
-    public int ID { get; private set; }
+    public int ID { get;  set; }
 
     
 
-    public string titulo { get; private set; }
+    public string titulo { get;  set; }
 
     
 
-    public string descripcion { get; private set; }
+    public string descripcion { get; set; }
 
     
-    public DateTime fecha { get; private set; }
+    public DateTime fecha { get;  set; }
 
     
-    public bool finalizada { get; private set; }
-    public bool idUsuario { get; private set; }
+    public bool finalizada { get;  set; }
+    public bool idUsuario { get;  set; }
 
     public Tarea()
     {

@@ -1,41 +1,88 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TP07.Models;
 
-namespace tp07.Controllers;
-
-public class HomeController : Controller
+namespace tp07.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class AccountController : Controller
     {
-        _logger = logger;
-    }
-    public  IActionResult Login(string UserName, string Password)
-    {
-        Usuario usuario = BD.Login(username, password);
-        if(usuario.ID != null)
+    
+        [HttpGet]
+        public IActionResult Login()
         {
-         HttpContext.Session.SetString("id", id.ToString());
-         return View("listaTareas");
+            string idStr = HttpContext.Session.GetString("id");
+            if (idStr == null) return RedirectToAction("CargarTareas", "Home");
+            return View();
         }
-        else {return View("Login");}
-    }
-    public  IActionResult Registro(string UserName, string Password, string Nombre, string Apellido, string Foto)
-    {           
-        Usuario usuario = new usuario(UserName, Password, Nombre, Apellido, Foto);
-        bool seRegistro = BD.registrar(usuario);
-        return View("Login");       
-    }
-
-     public  IActionResult CerrarSesion(string UserName, string Password)
-    {
-        Usuario usuario = BD.Login(username, password);
-        usuario.ID = 0;
-         HttpContext.Session.SetString("id", id.ToString());
-         return View("Login");
-    }
 
 
+    
+        public IActionResult Login(string username, string password)
+        {
+            
+            Usuario usuario = BD.Login(username, password);
+            if (usuario == null)
+            {
+                ViewBag.mensaje = "Usuario o contraseña inválidos.";
+                return View();
+            }
+
+            
+            HttpContext.Session.SetString("id", usuario.Id.ToString());
+
+           
+
+            
+            BD.ActualizarFechaLogin(usuario.Id);
+
+            return RedirectToAction("CargarTareas", "Home");
+        }
+
+        
+        public IActionResult Registro()
+        {
+            string id = HttpContext.Session.GetString("id");
+           
+            return View();
+        }
+
+        
+       
+        public IActionResult Registro(string username, string password, string nombre, string apellido, string foto)
+        {
+            
+            Usuario usuario = new Usuario
+            {
+                Username = username,
+                Password = password,
+                Nombre = nombre,
+                Apellido = apellido,
+                Foto = foto,
+                UltimoLogin = null
+            };
+
+            
+            bool seRegistro = BD.registrar(usuario);
+            if (!seRegistro)
+            {
+                ViewBag.Error = "El username ya existe.";
+                return View(usuario);
+            }
+
+            
+
+        
+            return RedirectToAction("Login");
+        }
+
+    
+        public IActionResult CerrarSesion()
+        {
+           
+            HttpContext.Session.Remove("id");
+            HttpContext.Session.Remove("username");
+            HttpContext.Session.Clear();
+          ViewBag.Mensaje = "Sesión cerrada correctamente.";
+            return RedirectToAction("Login");
+        }
+    }
 }

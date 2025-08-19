@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+@if(ViewBag.mensaje != null){
+    <p style="color:red">@ViewBag.mensaje</p>
+}
+
+<form action="@Url.Action("Login","Account")" method="post">
+    Usuario: <input type="text" name="username" />
+    
+    Contraseña: <input type="password" name="password" />
+    
+    <input type="submit" value="Ingresar" />
+</form>
+
+<p>¿No tenés cuenta? <a href="@Url.Action("Registro","Account")">Registrate</a></p>
