@@ -4,9 +4,10 @@
     Tarea tarea = ViewBag.tarea as Tarea;
 }
 
-<h2>Editar Tarea</h2>
+<div class="container">
+  <h2 class="page-title">Editar Tarea</h2>
 
-<form action='@Url.Action("EditarTareaGuardar","Home")' method="post">
+<form class="form card" action='@Url.Action("EditarTareaGuardar","Home")' method="post">
     <input type="hidden" name="id" value="@tarea.ID" />
 
     Título: <input type="text" name="titulo" value="@tarea.titulo" />
@@ -18,5 +19,4 @@
     <input type="radio" name="finalizada" value="false" /> No
     <input type="submit" value="Guardar cambios" />
 </form>
-
-<a href='@Url.Action("cargarTareas","Home")'>Volver</a>
+<a class="btn btn-soft" href='@Url.Action("cargarTareas","Home")'>Cancelar</a>

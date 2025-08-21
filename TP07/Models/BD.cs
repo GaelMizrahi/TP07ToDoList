@@ -13,7 +13,7 @@ public static class BD
         Usuario usuario;
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT * FROM Usuarios WHERE username = @username AND password = @password";
+            string query = "SELECT * FROM Usuarios WHERE [username] = @username AND [password] = @password";
             usuario = connection.QueryFirstOrDefault<Usuario>(query, new { username, password });
         }
         return usuario;

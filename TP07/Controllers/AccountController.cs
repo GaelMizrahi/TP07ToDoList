@@ -10,7 +10,7 @@ namespace tp07.Controllers
         public IActionResult Login()
         {
             string idStr = HttpContext.Session.GetString("id");
-            if (idStr != null) return RedirectToAction("CargarTareas", "Home");
+            if (idStr != null) return RedirectToAction("ListaTareas", "Home");
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace tp07.Controllers
                 nombre = nombre,
                 apellido = apellido,
                 foto = foto,
-                ultimoLogin = new DateTime()
+                ultimoLogin = DateTime.Now
             };
 
             

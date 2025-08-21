@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\48861728\\Documents\\TP07ToDoList\\TP07\\TP07.csproj": {}
+    "C:\\Users\\48861728\\Downloads\\TP07ToDoList\\TP07\\TP07.csproj": {}
   },
   "projects": {
-    "C:\\Users\\48861728\\Documents\\TP07ToDoList\\TP07\\TP07.csproj": {
+    "C:\\Users\\48861728\\Downloads\\TP07ToDoList\\TP07\\TP07.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\48861728\\Documents\\TP07ToDoList\\TP07\\TP07.csproj",
+        "projectUniqueName": "C:\\Users\\48861728\\Downloads\\TP07ToDoList\\TP07\\TP07.csproj",
         "projectName": "TP07",
-        "projectPath": "C:\\Users\\48861728\\Documents\\TP07ToDoList\\TP07\\TP07.csproj",
+        "projectPath": "C:\\Users\\48861728\\Downloads\\TP07ToDoList\\TP07\\TP07.csproj",
         "packagesPath": "C:\\Users\\48861728\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\48861728\\Documents\\TP07ToDoList\\TP07\\obj\\",
+        "outputPath": "C:\\Users\\48861728\\Downloads\\TP07ToDoList\\TP07\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

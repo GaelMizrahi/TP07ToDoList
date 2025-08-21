@@ -4,7 +4,8 @@
     List<Tarea> lista = ViewBag.ListaTareas as List<Tarea>;
 }
 
-<h2>Mis tareas</h2>
+<div class="container">
+  <h2 class="page-title">Mis tareas</h2>
 
 <ul>
 @if (lista != null)
@@ -26,5 +27,5 @@
 </ul>
 
 <section class="crearTareas"> 
-  <a href='@Url.Action("CrearTarea", "Home")'>Crear nueva tarea</a>
+ <a class="btn btn-primary" href='@Url.Action("CrearTareaGuardar","Home")'>Nueva tarea</a>
 </section>

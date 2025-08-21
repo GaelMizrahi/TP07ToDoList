@@ -29,11 +29,11 @@ public class HomeController : Controller
     }
 
 
-   public IActionResult CrearTareaGuardar( string titulo, string descripcion, DateTime fecha, bool finalizada)
+   public IActionResult CrearTareaGuardar()
     {
     
            
-            return View("crearTarea");
+            return View("crearTareas");
     }
     [HttpPost]
           public IActionResult CrearTareaGuardar(string titulo, string descripcion, DateTime fecha)
