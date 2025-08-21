@@ -33,13 +33,13 @@ public class HomeController : Controller
     {
     
            
-            return View();
+            return View("crearTarea");
     }
     [HttpPost]
           public IActionResult CrearTareaGuardar(string titulo, string descripcion, DateTime fecha)
         {
-            string idStr = HttpContext.Session.GetString("id");
-            
+          string idStr = HttpContext.Session.GetString("id");
+           
 
             int idUsuario = int.Parse(idStr);
 
@@ -47,25 +47,28 @@ public class HomeController : Controller
             {
                 titulo = titulo,
                 descripcion = descripcion,
-                fecha = fecha == default ? DateTime.Now : fecha,
+                fecha = (fecha == default ? DateTime.Now : fecha),
                 finalizada = false,
                 idUsuario = idUsuario
             };
 
             BD.CrearTarea(tarea);
-              ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+
+            ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
             return View("ListaTareas");
         }
-           public IActionResult EditarTareaGuardar ()
+           public IActionResult EditarTarea (int id)
            {
-                Tarea tarea = BD.TraerTarea(id);
-    return View("editarTareas", tarea);
+                string idStr = HttpContext.Session.GetString("id");
+            Tarea tarea = BD.TraerTareaAEditar(id);
+            ViewBag.tarea = tarea;
+            return View("editarTareas");
 
            }
 
           [HttpPost]
-          public IActionResult EditarTareaGuardar( string titulo, string descripcion, DateTime fecha, bool finalizada)
-        {
+       public IActionResult EditarTareaGuardar(int id, string titulo, string descripcion, DateTime fecha, bool finalizada)
+{
             string idStr = HttpContext.Session.GetString("id");
             
 
@@ -73,24 +76,27 @@ public class HomeController : Controller
 
             Tarea tarea = new Tarea
             {
-                  ID = id,
+                ID = id,
                 titulo = titulo,
                 descripcion = descripcion,
-                fecha = fecha == default ? DateTime.Now : fecha,
+                fecha = (fecha == default ? DateTime.Now : fecha),
                 finalizada = finalizada,
                 idUsuario = idUsuario
             };
 
             BD.ActualizarTarea(tarea);
-             ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+
+            ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
             return View("ListaTareas");
-        }
-    public IActionResult finalizarTarea( )
+}
+    public IActionResult finalizarTarea( int id)
     {
+        string idStr = HttpContext.Session.GetString("id");
+        int idUsuario = int.Parse(idStr);
             BD.FinalizarTarea(id);
-    string idStr = HttpContext.Session.GetString("id");
-    int idUsuario = int.Parse(idStr);
-    ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+    List<Tarea> lista = BD.TraerTareas(idUsuario);
+
+            ViewBag.ListaTareas = lista;
     return View("ListaTareas");
 
       
@@ -103,7 +109,9 @@ public class HomeController : Controller
             int idUsuario = int.Parse(idStr);
             BD.EliminarTarea(id);
             
-            ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+            List<Tarea> lista = BD.TraerTareas(idUsuario);
+
+            ViewBag.ListaTareas = lista;
             return View("ListaTareas");
         }
 

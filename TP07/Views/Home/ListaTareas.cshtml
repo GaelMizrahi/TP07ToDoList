@@ -1,28 +1,30 @@
+@using TP07.Models
 @{
     ViewData["Title"] = "ListaTareas";
+    List<Tarea> lista = ViewBag.ListaTareas as List<Tarea>;
 }
 
-@foreach(Tarea TareaVer in ViewBag.ListaTareas)
+<h2>Mis tareas</h2>
+
+<ul>
+@if (lista != null)
 {
-    @TareaVer.titulo;
-    @TareaVer.descripcion;
-    @TareaVer.fecha;
-    @TareaVer.finalizada;
+    foreach (Tarea t in lista)
+    {
+        <li>
+            <div>Título: @t.titulo</div>
+            <div>Descripción: @t.descripcion</div>
+            <div>Fecha: @t.fecha.ToString("yyyy-MM-dd")</div>
+            <div>Finalizada: @(t.finalizada ? "Sí" : "No")</div>
 
-    <section class="FinalizarTareas"> 
-     <a href='@Url.Action("finalizarTarea", "Home")'></a>
-    </section>
-
-    <section class="ModificarTareas"> 
-    <a href='@Url.Action("EditarTareaGuardar", "Home")'></a>
-    </section>
-
-    <section class="EliminarTareas"> 
-    <a href='@Url.Action("eliminarTarea", "Home")'></a>
-    </section>
-
+            <a href='@Url.Action("FinalizarTarea", "Home", new { id = t.ID })'>Finalizar</a> 
+            <a href='@Url.Action("EditarTarea", "Home", new { id = t.ID })'>Editar</a> 
+            <a href='@Url.Action("EliminarTarea", "Home", new { id = t.ID })'>Eliminar</a>
+        </li>
+    }
 }
+</ul>
 
 <section class="crearTareas"> 
-  <a href='@Url.Action("EditarTareaGuardar", "Home")'></a>
+  <a href='@Url.Action("CrearTarea", "Home")'>Crear nueva tarea</a>
 </section>

@@ -1,15 +1,15 @@
-@{
-    ViewData["Title"] = "crearTareas";
-}
+   @using TP07.Models
+    @{
+        ViewData["Title"] = "Crear Tarea";
+    }
 
-<form action="@Url.Action("CrearTareaGuardar","Home")" method="post">
-    titulo: <input type="text" name="titulo" />
-    
-    descripcion: <input type="password" name="descripcion" />
-   
-    fecha: <input type="date" name="fecha" />
-   
-    finalizada: <input type="radio" name="finalizada" />
-    
-    <input type="submit" value="CrearTareaGuardar" />
-</form>
+    <h2>Crear Tarea</h2>
+
+    <form action='@Url.Action("CrearTareaGuardar","Home")' method="post">
+        Título: <input type="text" name="titulo" /><br />
+        Descripción: <input type="text" name="descripcion" /><br />
+        Fecha: <input type="date" name="fecha" /><br />
+        <input type="submit" value="Guardar" />
+    </form>
+
+    <p><a href='@Url.Action("cargarTareas","Home")'>Volver</a></p>
