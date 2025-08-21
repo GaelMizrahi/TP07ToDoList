@@ -6,16 +6,16 @@ namespace tp07.Controllers
     public class AccountController : Controller
     {
     
-        [HttpGet]
+       
         public IActionResult Login()
         {
             string idStr = HttpContext.Session.GetString("id");
-            if (idStr == null) return RedirectToAction("CargarTareas", "Home");
+            if (idStr != null) return RedirectToAction("CargarTareas", "Home");
             return View();
         }
 
 
-    
+    [HttpPost]
         public IActionResult Login(string username, string password)
         {
             
@@ -27,23 +27,27 @@ namespace tp07.Controllers
             }
 
             
-            HttpContext.Session.SetString("id", usuario.Id.ToString());
+            HttpContext.Session.SetString("id", usuario.ID.ToString());
 
            
 
             
-            BD.ActualizarFechaLogin(usuario.Id);
+            BD.ActualizarFechaLogin(usuario.ID);
 
-            return RedirectToAction("CargarTareas", "Home");
+            return RedirectToAction("cargarTareas", "Home");
+        }
+        public IActionResult Registro()
+        {
+            string idStr = HttpContext.Session.GetString("id");
+            if (!string.IsNullOrEmpty(idStr)) return RedirectToAction("CargarTareas", "Home");
+            return View();
         }
 
         
-        public IActionResult Registro()
-        {
-            string id = HttpContext.Session.GetString("id");
-           
-            return View();
-        }
+        [HttpPost]
+
+        
+       
 
         
        
@@ -52,12 +56,12 @@ namespace tp07.Controllers
             
             Usuario usuario = new Usuario
             {
-                Username = username,
-                Password = password,
-                Nombre = nombre,
-                Apellido = apellido,
-                Foto = foto,
-                UltimoLogin = null
+                username = username,
+                password = password,
+                nombre = nombre,
+                apellido = apellido,
+                foto = foto,
+                ultimoLogin = new DateTime()
             };
 
             

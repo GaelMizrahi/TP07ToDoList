@@ -15,27 +15,27 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-         return RedirectToAction("Login,AccountController");
-    }
+          return RedirectToAction("Login", "Account");    }
     public IActionResult cargarTareas()
     {
        string idStr = HttpContext.Session.GetString("id");
           
 
             int id = int.Parse(idStr);
-            List<Tarea> lista = BD.TraerTareas(idUsuario);
+            List<Tarea> lista = BD.TraerTareas(id);
 
             ViewBag.ListaTareas = lista;
             return View("ListaTareas");
     }
 
 
-   public IActionResult CrearTarea( string titulo, string descripcion, DateTime fecha, bool finalizada)
+   public IActionResult CrearTareaGuardar( string titulo, string descripcion, DateTime fecha, bool finalizada)
     {
-      string idStr = HttpContext.Session.GetString("id");
+    
            
             return View();
     }
+    [HttpPost]
           public IActionResult CrearTareaGuardar(string titulo, string descripcion, DateTime fecha)
         {
             string idStr = HttpContext.Session.GetString("id");
@@ -45,32 +45,26 @@ public class HomeController : Controller
 
             Tarea tarea = new Tarea
             {
-                Titulo = titulo,
-                Descripcion = descripcion,
-                Fecha = fecha == default ? DateTime.Now : fecha,
-                Finalizada = false,
-                IdUsuario = idUsuario
+                titulo = titulo,
+                descripcion = descripcion,
+                fecha = fecha == default ? DateTime.Now : fecha,
+                finalizada = false,
+                idUsuario = idUsuario
             };
 
             BD.CrearTarea(tarea);
               ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
             return View("ListaTareas");
         }
+           public IActionResult EditarTareaGuardar ()
+           {
+                Tarea tarea = BD.TraerTarea(id);
+    return View("editarTareas", tarea);
 
-    public IActionResult modificarTarea( string titulo, string descripcion, DateTime fecha, bool finalizada)
-    {
-          
-        
-            string idStr = HttpContext.Session.GetString("id");
-            
+           }
 
-            Tarea tarea = BD.TraerTareaAEditar(idStr);
-            
-
-            return View(tarea);
-        
-    }
-          public IActionResult EditarTareaGuardar(int id, string titulo, string descripcion, DateTime fecha, bool finalizada)
+          [HttpPost]
+          public IActionResult EditarTareaGuardar( string titulo, string descripcion, DateTime fecha, bool finalizada)
         {
             string idStr = HttpContext.Session.GetString("id");
             
@@ -79,12 +73,12 @@ public class HomeController : Controller
 
             Tarea tarea = new Tarea
             {
-                Id = id,
-                Titulo = titulo,
-                Descripcion = descripcion,
-                Fecha = fecha == default ? DateTime.Now : fecha,
-                Finalizada = finalizada,
-                IdUsuario = idUsuario
+                  ID = id,
+                titulo = titulo,
+                descripcion = descripcion,
+                fecha = fecha == default ? DateTime.Now : fecha,
+                finalizada = finalizada,
+                idUsuario = idUsuario
             };
 
             BD.ActualizarTarea(tarea);
@@ -93,12 +87,11 @@ public class HomeController : Controller
         }
     public IActionResult finalizarTarea( )
     {
-         string idStr = HttpContext.Session.GetString("id");
-           int idUsuario = int.Parse(idStr);
             BD.FinalizarTarea(id);
-            
-            ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
-            return View("ListaTareas");
+    string idStr = HttpContext.Session.GetString("id");
+    int idUsuario = int.Parse(idStr);
+    ViewBag.ListaTareas = BD.TraerTareas(idUsuario);
+    return View("ListaTareas");
 
       
     }
@@ -120,9 +113,5 @@ public class HomeController : Controller
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+
 }

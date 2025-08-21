@@ -11,7 +11,7 @@ public static class BD
     using(SqlConnection connection = new SqlConnection(_connectionString))
     {
         string query = "SELECT * FROM Usuarios WHERE username = @username AND password = @password";
-        usuarios = connection.QueryFirstOrDefault<Uasuario>(query, new {username, password});
+        usuarios = connection.QueryFirstOrDefault<Usuario>(query, new {username, password});
     }
      return usuarios;
 
@@ -63,7 +63,7 @@ public static class BD
         string query = "INSERT INTO Tareas (id, titulo, descripcion, fecha, finalizada, idUsuario) VALUES (@id, @titulo, @descripcion, @fecha, @finalizada, @idUsuario)";
         using(SqlConnection connection = new SqlConnection(_connectionString))
     {      
-        connection.Execute(query, new {id = tarea.id, titulo = tarea.titulo, descripcion = tarea.descripcion, fecha = tarea.fecha, finalizada = tarea.finalizada, idUsuario = tarea.idUsuario });
+        connection.Execute(query, new {id = tarea.ID, titulo = tarea.titulo, descripcion = tarea.descripcion, fecha = tarea.fecha, finalizada = tarea.finalizada, idUsuario = tarea.idUsuario });
     }
     
     }
@@ -72,7 +72,7 @@ public static class BD
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
         string query = "DELETE FROM Tareas WHERE id = @idTarea";
-        connection.Execute(query, new { idTarea });
+        connection.Execute(query, new { IdTarea });
     }
 }
     

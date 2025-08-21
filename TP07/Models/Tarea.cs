@@ -21,7 +21,7 @@ public class Tarea
 
     
     public bool finalizada { get;  set; }
-    public bool idUsuario { get;  set; }
+    public int idUsuario { get;  set; }
 
     public Tarea()
     {
